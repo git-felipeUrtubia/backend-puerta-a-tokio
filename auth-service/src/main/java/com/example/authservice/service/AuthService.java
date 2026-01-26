@@ -66,7 +66,7 @@ public class AuthService {
         );
 
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForObject("http://backend-puerta-a-tokio-production.up.railway.app/user/save-user", userProfileRequest, String.class);
+        return restTemplate.postForObject("http://user-service:8080/user/save-user", userProfileRequest, String.class);
 
 //        return "Usuario guardado exitosamente";
     }
@@ -82,7 +82,7 @@ public class AuthService {
         String token = jwtUtils.createToken(authentication);
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://backend-puerta-a-tokio-production.up.railway.app/user/find-user-{id}";
+        String url = "http://user-service:8080/user/find-user-{id}";
         Long id = user.getUserID();
         UserResponseDTO data = restTemplate.getForObject(url, UserResponseDTO.class, id);
 
