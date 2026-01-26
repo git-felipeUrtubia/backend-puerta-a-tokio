@@ -18,7 +18,7 @@ public class GatewayConfig {
                 .route("auth-service", r -> r.path("/auth/**")
                         .uri("http://auth-service:8080"))
 
-                .route("auth-service", r -> r.path("/user/**")
+                .route("user-service", r -> r.path("/user/**")
                         .uri("http://user-service:8080"))
 
                 .route("comments-service", r -> r.path("/comment/**")
