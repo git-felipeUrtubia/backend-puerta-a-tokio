@@ -13,16 +13,16 @@ public class GatewayConfig {
         return builder.routes()
 
                 .route("catalog-service", r -> r.path("/catalog/**")
-                        .uri("http://localhost:8081"))
+                        .uri("http://catalog-service:8080"))
 
                 .route("auth-service", r -> r.path("/auth/**")
-                        .uri("http://localhost:8082"))
+                        .uri("http://auth-service:8080"))
 
                 .route("auth-service", r -> r.path("/user/**")
-                        .uri("http://localhost:8083"))
+                        .uri("http://user-service:8080"))
 
                 .route("comments-service", r -> r.path("/comment/**")
-                        .uri("http://localhost:8084"))
+                        .uri("http://comments-service:8080"))
 
                 .build();
     }
