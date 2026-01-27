@@ -31,8 +31,8 @@ public class GatewayConfig {
                 .route("user-service", r -> r.path("/user/**")
                         .uri(userServiceUri))
 
-                .route("comments-service", r -> r.path("/comment/**")
-                        .uri("http://comments-service:8080"))
+//                .route("comments-service", r -> r.path("/comment/**")
+//                        .uri("http://comments-service:8080"))
 
                 .build();
     }
