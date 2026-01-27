@@ -34,7 +34,9 @@ public class SecurityConfig {
                                 "/user/save-user" ,
                                 "/catalog/tour/find-all",
                                 "/comment/save-comment",
-                                "/comment/find-all")
+                                "/comment/find-all",
+                                "/catalog/galery/create",
+                                "/catalog/tour/create")
                         .permitAll()
 
                         .pathMatchers(
