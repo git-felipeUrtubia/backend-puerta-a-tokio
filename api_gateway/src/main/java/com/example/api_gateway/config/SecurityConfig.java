@@ -34,10 +34,14 @@ public class SecurityConfig {
                                 "/user/save-user" ,
                                 "/catalog/tour/find-all",
                                 "/comment/save-comment",
-                                "/comment/find-all")
+                                "/comment/find-all",
+                                "/catalog/tour/create",
+                                "/catalog/galery/create")
                         .permitAll()
 
-                        .pathMatchers("/auth/saludo", "/user/find-all-users").authenticated()
+                        .pathMatchers(
+                                "/auth/saludo",
+                                "/user/find-all-users").authenticated()
 
                         .anyExchange().denyAll()
                 )
