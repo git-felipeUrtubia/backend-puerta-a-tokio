@@ -9,30 +9,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GatewayConfig {
 
-    @Value("${AUTH_SERVICE_URI:http://localhost:8080}")
-    private String authServiceUri;
-
-    @Value("${USER_SERVICE_URI:http://localhost:8080}")
-    private String userServiceUri;
-
-    @Value("${CATALOG_SERVICE_URI:http://localhost:8080}")
-    private String catalogServiceUri;
-
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
 
                 .route("catalog-service", r -> r.path("/catalog/**")
-                        .uri(catalogServiceUri))
+                        .uri("http://catalog-service:8080"))
 
                 .route("auth-service", r -> r.path("/auth/**")
-                        .uri(authServiceUri))
+                        .uri("http://auth-service:8080"))
 
                 .route("user-service", r -> r.path("/user/**")
-                        .uri(userServiceUri))
+                        .uri("http://user-service:8080"))
 
-//                .route("comments-service", r -> r.path("/comment/**")
-//                        .uri("http://comments-service:8080"))
+                .route("comments-service", r -> r.path("/comment/**")
+                        .uri("http://comments-service:8080"))
 
                 .build();
     }
