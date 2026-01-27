@@ -26,10 +26,10 @@ public class GatewayConfig {
                         .uri(catalogServiceUri))
 
                 .route("auth-service", r -> r.path("/auth/**")
-                        .uri(authServiceUri))
+                        .uri("http://auth-service:8080"))
 
                 .route("user-service", r -> r.path("/user/**")
-                        .uri(userServiceUri))
+                        .uri("http://user-service:8080"))
 
                 .route("comments-service", r -> r.path("/comment/**")
                         .uri("http://comments-service:8080"))
