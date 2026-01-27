@@ -17,10 +17,10 @@ public class GatewayConfig {
                         .uri("http://catalog-service:8080"))
 
                 .route("auth-service", r -> r.path("/auth/**")
-                        .uri("http://auth-service:8080"))
+                        .uri("http://auth-service.railway.internal:8080"))
 
                 .route("user-service", r -> r.path("/user/**")
-                        .uri("http://user-service:8080"))
+                        .uri("http://user-service.railway.internal:8080"))
 
                 .route("comments-service", r -> r.path("/comment/**")
                         .uri("http://comments-service:8080"))
