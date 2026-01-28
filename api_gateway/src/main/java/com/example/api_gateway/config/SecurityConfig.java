@@ -34,13 +34,12 @@ public class SecurityConfig {
 
                         .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
                         .pathMatchers(
-                                "/auth/register",
-                                "/auth/login",
+                                "/auth/**",
                                 "/user/find-user-{id}",
-                                "/user/save-user" ,
-                                "/catalog/tour/find-all",
+                                "/user/save-user/**" ,
+                                "/catalog/tour/find-all/**",
                                 "/comment/save-comment",
-                                "/comment/find-all",
+                                "/comment/find-all/**",
                                 "/catalog/galery/create",
                                 "/catalog/tour/create")
                         .permitAll()
