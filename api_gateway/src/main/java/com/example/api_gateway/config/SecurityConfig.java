@@ -29,6 +29,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain SecurityFilterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(http -> http
 
                         .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
@@ -55,18 +56,21 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsWebFilter corsWebFilter() {
-        CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("https://puerta-a-tokio-front.vercel.app"));
-        corsConfig.setMaxAge(3600L); // Cachear la respuesta de preflight 1 hora
-        corsConfig.addAllowedMethod("*"); // Permitir todos los métodos (GET, POST, OPTIONS...)
-        corsConfig.addAllowedHeader("*"); // Permitir todas las cabeceras
-        corsConfig.setAllowCredentials(true);
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // 4. USAMOS EL COMODÍN DE PATRÓN (Más robusto que setAllowedOrigins)
+        // Esto permite Vercel, localhost y cualquier subdominio sin fallar por strings exactos
+        configuration.addAllowedOriginPattern("*");
+
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept"));
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfig);
-
-        return new CorsWebFilter(source);
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 
