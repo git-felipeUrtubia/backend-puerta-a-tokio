@@ -26,15 +26,19 @@ public class GatewayConfig {
         return builder.routes()
 
                 .route("catalog-service", r -> r.path("/catalog/**")
+                        .filters(f -> f.stripPrefix(1))
                         .uri(catalogServiceUri))
 
                 .route("auth-service", r -> r.path("/auth/**")
+                        .filters(f -> f.stripPrefix(1))
                         .uri("http://auth-service:8080"))
 
                 .route("user-service", r -> r.path("/user/**")
+                        .filters(f -> f.stripPrefix(1))
                         .uri("http://user-service:8080"))
 
                 .route("comments-service", r -> r.path("/comment/**")
+                        .filters(f -> f.stripPrefix(1))
                         .uri(commentServiceUri))
 
                 .build();
