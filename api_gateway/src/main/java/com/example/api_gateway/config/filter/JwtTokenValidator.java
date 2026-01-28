@@ -30,10 +30,6 @@ public class JwtTokenValidator implements WebFilter {
 
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
 
-        if (exchange.getRequest().getMethod().matches("OPTIONS")) {
-            return chain.filter(exchange);
-        }
-
         if(token != null && token.startsWith("Bearer ")) {
 
             token = token.substring(7);
