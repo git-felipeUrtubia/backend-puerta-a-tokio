@@ -26,7 +26,6 @@ public class GatewayConfig {
         return builder.routes()
 
                 .route("catalog-service", r -> r.path("/catalog/**")
-                        .filters(f -> f.stripPrefix(1))
                         .uri(catalogServiceUri))
 
                 .route("auth-service", r -> r.path("/auth/**")
