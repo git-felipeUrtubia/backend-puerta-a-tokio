@@ -31,11 +31,11 @@ public class GatewayConfig {
 
                 .route("auth-service", r -> r.path("/auth/**")
                         .filters(f -> f.stripPrefix(1))
-                        .uri("http://auth-service:8080"))
+                        .uri(authServiceUri))
 
                 .route("user-service", r -> r.path("/user/**")
                         .filters(f -> f.stripPrefix(1))
-                        .uri("http://user-service:8080"))
+                        .uri(userServiceUri))
 
                 .route("comments-service", r -> r.path("/comment/**")
                         .filters(f -> f.stripPrefix(1))
