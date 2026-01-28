@@ -18,6 +18,9 @@ public class GatewayConfig {
     @Value("${CATALOG_SERVICE_URI:http://localhost:8080}")
     private String catalogServiceUri;
 
+    @Value("${COMMENT_SERVICE_URI:http://localhost:8080}")
+    private String commentServiceUri;
+
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
@@ -32,7 +35,7 @@ public class GatewayConfig {
                         .uri("http://user-service:8080"))
 
                 .route("comments-service", r -> r.path("/comment/**")
-                        .uri("http://comments-service:8080"))
+                        .uri(commentServiceUri))
 
                 .build();
     }

@@ -52,7 +52,7 @@ public class SecurityConfig {
     @Bean
     public CorsWebFilter CorsConfiguration() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("https://puerta-a-tokio.vercel.app");
+        corsConfiguration.addAllowedOrigin("https://puerta-a-tokio-front.vercel.app");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.setAllowCredentials(true);
