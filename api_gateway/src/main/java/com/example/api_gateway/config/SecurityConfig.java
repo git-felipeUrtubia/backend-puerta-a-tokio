@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(http -> http
 
+                        .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
                         .pathMatchers(
                                 "/auth/register",
                                 "/auth/login",
@@ -50,7 +51,7 @@ public class SecurityConfig {
 
                         .anyExchange().denyAll()
                 )
-                .addFilterBefore(new JwtTokenValidator(jwtUtils), SecurityWebFiltersOrder.AUTHENTICATION)
+                .addFilterAt(new JwtTokenValidator(jwtUtils), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
 
