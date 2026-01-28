@@ -57,7 +57,7 @@ public class SecurityConfig {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("https://puerta-a-tokio-front.vercel.app"));
+        corsConfig.setAllowedOrigins(Arrays.asList("https://puerta-a-tokio-front.vercel.app/home"));
         corsConfig.setMaxAge(3600L); // Cachear la respuesta de preflight 1 hora
         corsConfig.addAllowedMethod("*"); // Permitir todos los métodos (GET, POST, OPTIONS...)
         corsConfig.addAllowedHeader("*"); // Permitir todas las cabeceras
