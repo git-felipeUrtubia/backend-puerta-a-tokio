@@ -29,7 +29,6 @@ public class SecurityConfig {
     public SecurityWebFilterChain SecurityFilterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(http -> http
 
                         .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
@@ -38,6 +37,7 @@ public class SecurityConfig {
                                 "/user/find-user-{id}",
                                 "/user/save-user/**" ,
                                 "/catalog/tour/find-all/**",
+                                "/catalog/tour/find-all",
                                 "/comment/save-comment",
                                 "/comment/find-all/**",
                                 "/catalog/galery/create",
@@ -55,17 +55,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        // Permite tu dominio de Vercel
-        configuration.setAllowedOrigins(Arrays.asList("https://puerta-a-tokio-front.vercel.app"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
-        configuration.setAllowCredentials(true);
+    public CorsWebFilter corsWebFilter() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowedOrigins(Arrays.asList("https://puerta-a-tokio-front.vercel.app"));
+        corsConfig.setMaxAge(3600L); // Cachear la respuesta de preflight 1 hora
+        corsConfig.addAllowedMethod("*"); // Permitir todos los métodos (GET, POST, OPTIONS...)
+        corsConfig.addAllowedHeader("*"); // Permitir todas las cabeceras
+        corsConfig.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return new CorsWebFilter(source);
     }
 
 
