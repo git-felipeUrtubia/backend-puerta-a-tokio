@@ -29,7 +29,6 @@ public class SecurityConfig {
     public SecurityWebFilterChain SecurityFilterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(http -> http
 
                         .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
@@ -55,23 +54,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
 
-        // 4. USAMOS EL COMODÍN DE PATRÓN (Más robusto que setAllowedOrigins)
-        // Esto permite Vercel, localhost y cualquier subdominio sin fallar por strings exactos
-        configuration.addAllowedOriginPattern("*");
-
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept"));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 
 
 }
