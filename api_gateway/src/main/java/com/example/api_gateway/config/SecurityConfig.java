@@ -48,7 +48,7 @@ public class SecurityConfig {
                                 "/auth/saludo",
                                 "/user/find-all-users").authenticated()
 
-                        .anyExchange().denyAll()
+                        .anyExchange().permitAll()
                 )
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
