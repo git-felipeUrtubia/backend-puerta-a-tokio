@@ -32,9 +32,9 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(http -> http
 
-                        .pathMatchers(org.springframework.http.HttpMethod.OPTIONS).permitAll()
                         .pathMatchers(
-                                "/auth/**",
+                                "/auth/register",
+                                "/auth/login",
                                 "/user/find-user-{id}",
                                 "/user/save-user" ,
                                 "/catalog/tour/find-all",
