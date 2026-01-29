@@ -50,7 +50,7 @@ public class SecurityConfig {
 
                         .anyExchange().denyAll()
                 )
-                .addFilterAt(new JwtTokenValidator(jwtUtils), SecurityWebFiltersOrder.AUTHENTICATION)
+                .addFilterBefore(new JwtTokenValidator(jwtUtils), SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
 
