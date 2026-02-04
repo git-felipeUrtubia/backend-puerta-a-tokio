@@ -28,8 +28,8 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain SecurityFilterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(http -> http
 
                         .pathMatchers(
@@ -41,7 +41,9 @@ public class SecurityConfig {
                                 "/comment/save-comment",
                                 "/comment/find-all",
                                 "/catalog/galery/create",
-                                "/catalog/tour/create")
+                                "/catalog/tour/create",
+                                "/catalog/info/save-info",
+                                "/catalog/info/find-all")
                         .permitAll()
 
                         .pathMatchers(
@@ -57,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOriginPattern("https://puerta-a-tokio-front.vercel.app");
+        configuration.addAllowedOriginPattern("http://localhost:5173");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

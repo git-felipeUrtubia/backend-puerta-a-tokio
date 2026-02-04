@@ -42,7 +42,7 @@ public class CommentService {
         List<CommentResponseDTO> res = new ArrayList<>();
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://user-service.railway.internal:8080/user/find-all-users";
+        String url = "http://localhost:8080/user/find-all-users";
 
 
         // 1. CAPTURAR EL TOKEN DE LA PETICIÓN ACTUAL

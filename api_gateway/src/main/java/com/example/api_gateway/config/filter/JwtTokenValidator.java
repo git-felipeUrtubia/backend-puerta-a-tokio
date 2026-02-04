@@ -34,31 +34,26 @@ public class JwtTokenValidator implements WebFilter {
 
             token = token.substring(7);
 
-            try {
-                DecodedJWT decodedJWT = jwtUtils.validateToken(token);
-                String username = jwtUtils.extractUsername(decodedJWT);
-                String stringAuthorities = jwtUtils.extractSpecificClaim(decodedJWT, "authorities").asString();
 
-                Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
+            DecodedJWT decodedJWT = jwtUtils.validateToken(token);
+            String username = jwtUtils.extractUsername(decodedJWT);
+            String stringAuthorities = jwtUtils.extractSpecificClaim(decodedJWT, "authorities").asString();
 
-                ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
-                        .header("X-User-Name", username)
-                        .header("X-User-Authorities", stringAuthorities)
-                        .build();
+            Collection<? extends GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities);
 
-                ServerWebExchange modifiedExchange = exchange.mutate().request(modifiedRequest).build();
+            ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
+                    .header("X-User-Name", username)
+                    .header("X-User-Authorities", stringAuthorities)
+                    .build();
 
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+            ServerWebExchange modifiedExchange = exchange.mutate().request(modifiedRequest).build();
 
-                return chain.filter(modifiedExchange)
-                        .contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
 
-            }catch (Exception e) {
-                // ¡IMPORTANTE! Si el token está vencido o es falso, NO lances error.
-                // Simplemente ignóralo y deja pasar la petición como anónima.
-                // (Spring Security la bloqueará después si la ruta lo requiere)
-                return chain.filter(exchange);
-            }
+            return chain.filter(modifiedExchange)
+                    .contextWrite(ReactiveSecurityContextHolder.withAuthentication(authentication));
+
+
         }
 
         return chain.filter(exchange);

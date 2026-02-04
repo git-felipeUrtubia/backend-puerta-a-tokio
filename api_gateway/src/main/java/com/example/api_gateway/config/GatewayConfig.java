@@ -9,33 +9,33 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GatewayConfig {
 
-    @Value("${AUTH_SERVICE_URI:http://localhost:8080}")
-    private String authServiceUri;
-
-    @Value("${USER_SERVICE_URI:http://localhost:8080}")
-    private String userServiceUri;
-
-    @Value("${CATALOG_SERVICE_URI:http://localhost:8080}")
-    private String catalogServiceUri;
-
-    @Value("${COMMENT_SERVICE_URI:http://localhost:8080}")
-    private String commentServiceUri;
+//    @Value("${AUTH_SERVICE_URI:http://localhost:8080}")
+//    private String authServiceUri;
+//
+//    @Value("${USER_SERVICE_URI:http://localhost:8080}")
+//    private String userServiceUri;
+//
+//    @Value("${CATALOG_SERVICE_URI:http://localhost:8080}")
+//    private String catalogServiceUri;
+//
+//    @Value("${COMMENT_SERVICE_URI:http://localhost:8080}")
+//    private String commentServiceUri;
 
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
 
                 .route("catalog-service", r -> r.path("/catalog/**")
-                        .uri(catalogServiceUri))
+                        .uri("http://localhost:8081"))
 
                 .route("auth-service", r -> r.path("/auth/**")
-                        .uri(authServiceUri))
+                        .uri("http://localhost:8082"))
 
                 .route("user-service", r -> r.path("/user/**")
-                        .uri(userServiceUri))
+                        .uri("http://localhost:8083"))
 
                 .route("comments-service", r -> r.path("/comment/**")
-                        .uri(commentServiceUri))
+                        .uri("http://localhost:8084"))
 
                 .build();
     }
